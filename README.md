@@ -1,7 +1,7 @@
 librcye (libre cyber)->(librecyber)->(librecy)->(librcye)
 
 GOAL
- http(s) censorship watchdog
+  censorship watchdog, and solutions, with eye on increasing censorship in Middle-East region, blocking any dissent, secure communication, and VOIP, as tyranny increases, with censorship on evading tools, and solutions, we hope to provide awareness, guidance, and solutions to each problem.
 
 LANGUAGE
  nost ?
