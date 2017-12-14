@@ -1,0 +1,61 @@
+<div id = "table" style="width:80%, height:50%" ></div>
+<select id = "censorship_type" onclock="set_censorship_type(this)">
+  <option value="0">None</option>
+  <option value="1">Censord</option>
+  <option value="2">Uncensord</option>
+  <option value="3">Newly_Censord</option>
+</select>
+
+<select id = "country_select" onclock="set_censorship_country(this)"></select>
+
+<script src = "../src/base.js">
+  var None = "non"
+  var CENSORED = "censored"
+  var UNCENSORED = "uncensored"
+  var NEWLY_CENSORED = "newly_censored"
+  var ctype = null
+  var country = []
+  var records = []
+
+  function init() {
+      //TODO load {getCensoredCountries, load_records} synchronously
+      //load select countires
+      var countries = getCensoredCountries()
+      var dropdown = ""
+      for (int i = 0; i < countries.length; i++) {
+	  dropdown = "<option value=\""+countries[i], \"">"+ countries[i]+"</option>"
+      }
+      document.getElementById("country_select").innerHtml(dropdown)
+      records = load_records()
+      update_table()
+  }
+
+  function set_censorship_type(id) {
+      ctype = id.value
+      update_table()
+  }
+
+  function set_censorship_country(id) {
+      country = id.value
+      update_table()
+  }
+
+  function update_table() {
+      var table="<table><tr><th>Stamp</th><th>Host</th><th>Country></th></tr>"
+      var metadata = []
+      var metalen = 0
+      var chosts = []
+      for (int i = 0; i < records.length; i++) {
+	  metadata = records[i][0]
+	  metalen = metadata.length
+	  if (metalen>=2 && records[i][1].split(SEP).length>=2) && (country==null || country==metadata[0]) && (ctype==null || ctype==metadata[2]) {
+	      chosts = records[i][1].split(SEP)
+	      for (int j = 0; j < chosts.length; j++)
+		  table += "<tr><td>"+chosts[0]+"</td><td>"+chosts[1]+"/<td><td>"+metadata[0]+"</td><td>"+(metalen>2)?metadata[2]:None+"</td></tr>"
+	  }
+      }
+      table += "</table>"
+      document.getElementById("table").innerHtml(table)			
+  }
+  init()
+</script>

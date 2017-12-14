@@ -1,5 +1,5 @@
 ---
 title: cyber censorship
-layout: default
+layout: index
 ---
 

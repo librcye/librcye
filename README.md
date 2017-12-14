@@ -1,42 +1,24 @@
 librcye (libre cyber)->(librecyber)->(librecy)->(librcye)
 
 GOAL
-  censorship watchdog, and solutions, with eye on increasing censorship in Middle-East region, blocking any dissent, secure communication, and VOIP, as tyranny increases, with censorship on evading tools, and solutions, we hope to provide awareness, guidance, and solutions to each problem.
+censorship watchdog, and solutions, with eye on increasing censorship, and surveillance in Middle-East region, blocking any dissent, secure communication, and VOIP, as tyranny increases, with censorship on evading tools, we hope to provide awareness, guidance, and solutions for each problem.
 
-LANGUAGE
- nost ?
- node------------destination service, or ip:port
- non-http [node]-tcp node with no binding at 80, or 443
- http [node]-----tcp node binding at 80, or 443
- validtion-------censorship test
- censored--------node is censored if guidelines (2), or (3) are valid.
- nodes-database--human-readable http nodes database. see below
-
-GUIDELINES
-  1- each node makred censored only after validation.
+ASSUMPTIONS
+  1- each node is uncensored unless validated
   2- ISPs apply DPI(Deep Packet Inspection).
   3- DNSs are censored.
 
-INPUT/OUTPUT
-  in---nodes database
-  out--censored nodes database
-
-DESIGN
-'''
-INSTANT_FORMAT: host
-CENSORED_FORMAT: stamp,host
-
-'''
-
-NODES DATABASE
-  nodes Database: records
-  |records\nstamp
-  records: PORT\tHOST\n
-  | record\nrecord
-  stamp: (string returned by ctime(2)
-  
-  PORT--80/443
-  HOST--two-labeled hostname lable1.hostname.tld 
+FORMAT
+  RECORDS:
+    alexa: ip,host
+    resolv: ip:port,host,path[,inst]
+    censored: stamp,ip:port,host,path
+  DATA_FILE_NAME:
+    (COUNTRY_NAME)_(COUNTRY_CODE)_(CENSORSHIP_STATE).txt
+  CENSORSHIP_STATE:
+    CENSORED|UNCENSORED|NEWLY_CENSORED
+  CLASSIFICATION:
+    UNDEFINED|NEWS|ACTIVISM|LAW|HUMANE_RIGHTS|RELIGION|SEXUALITY|PORNOGRAPHY|
 --------------------------------------------------------
 FACTS
   - some servers (top ranked) resonse to not supported by status code 3xx  instad of 4xx
@@ -48,6 +30,8 @@ POSSIBLE CENSORSHIP TECHINQUES:
   - url paths[links]
     - economically expensive.
 TODO
+  - does all servers support 3xx, and complete missing url labels?
+  - push ./data automatically 
   - imp test
   - emulate protocols
   - does all severs respond with higher labels?

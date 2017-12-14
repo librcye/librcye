@@ -1,56 +1,52 @@
 import input
 import time
+import os
 
+CENSORED=0b1
+UNCENSORED=0b10
+NEWLY_CENSORED=0b100
+
+#classification
+UNDEFINED=0b1000
+NEWS=0b10000
+ACTIVISM=0b100000
+LAW=0b1000000
+HUMANE_RIGHTS=0b10000000
+RELIGION=0b1000000000
+SEXUALITY=0b100000000000
+PORNOGRAPHY=0b10000000000000
 SEP = ','
 
 def stamp():
     return time.ctime(None)
 
-#TODO  generalize instant,remove_censored, and diff below
-def add_instant_redirection(node):
-    lines = ''
-    fin = open(input.instant_redirection, 'rw')
-    line = fin.readline()
-    while len(line):
-        if not line.split('\n')[0]==node.host:
-            lines+=line
-        line = fin.readline()
-    lines+=node.host+'\n'
-    fin.write(lines)
-    
-def remove_censored(node):
-    lines = ''
-    fin = open(input.censored, 'rw')
-    line = fin.readline()
-    while len(line):
-        if not line.split(SEP)[1].split('\n')[0]==node.host:
-            lines+=line
-        line = fin.readline()
-    fin.write(lines)
+def get_censorship_type(node):
+    if os.path.exists(input.censored):
+        fin = open(input.censored)
+        record = fin.readline().split(',')
+        while len(record)>1:
+            if record[2]==node.host:
+                ctype = int(record[4])
+                if ctype|CENSORED==ctype or ctype|NEWLY_CENSORED==ctype:
+                    if node.routable:
+                        return UNCENSORED
+                    else:
+                        return CENSORED
+            record = fin.readline().split(',')
+        return NEWLY_CENSORED
 
-def update_instant_redirection(node, index):
-    add_instant_redirection(node)
-    remove_censored(node)
-
-def readiff(fin, index):
-    nodes = []
-    line = fin.readline()
-    while len(line) and len(line.split(SEP))==index+1:
-        nodes.append([line, -1])
-        line = fin.readline()
-    return nodes
-
-'''
-left, right old, new of the same format, seperated by character \,
-index is for the comparsion indeces
-'''
-def diff_records(left, right , index):
-    lnodes = readiff(left, index)
-    rnodes = readiff(right, index)
-    for i, l in enumerate(lnodes):
-        for j, r in enumerate(rnodes):
-            #you can do better by pushing un mapped diffy to end, and holding index for start of unmapped region.
-            if l[0].split(SEP, index)[index]==r[0].split(SEP, index)[index]:
-                l[1] = j
-                r[1] = i
-    return [lnodes, rnodes]
+def pwrite(msg, path, mode, lock=None, close=False):
+    write(msg, lock, None, close, path, mode)
+def dwrite(msg, fout, lock=None, close=False):
+    write(msg, lock, fout, close)
+def write(msg, lock=None, fout=None, close=False, path=None, mode=None):
+    if fout==None:
+        fout = open(path, mode)
+    if not lock==None:
+        lock.acquire()
+    fout.write(msg)
+    if not lock==None:
+        lock.release()
+    if close:
+        fout.close()
+        
