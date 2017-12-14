@@ -9,7 +9,7 @@ if len(sys.argv)>1:
     elif sys.argv[1]=='-inst':
         fin = input.censored
     if len(sys.argv)>2 and sys.argv[2]=='-o':
-        input.censored = sys.argv[3]+.'.txt'
+        input.censored = sys.argv[3]+'.txt'
 
 io = nodeio.NodeIO(fin)
 io.load()
