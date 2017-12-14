@@ -12,10 +12,10 @@ FORMAT
   RECORDS:
     alexa: ip,host
     resolv: ip:port,host,path[,inst]
-    censored: stamp,ip:port,host,path
+    censored: stamp,ip:port,host,path,CENSORSHIP_TYPE
   DATA_FILE_NAME:
-    (COUNTRY_NAME)_(COUNTRY_CODE)_(CENSORSHIP_STATE).txt
-  CENSORSHIP_STATE:
+    (COUNTRY_NAME)_(COUNTRY_CODE).txt
+  CENSORSHIP_TYPE:
     CENSORED|UNCENSORED|NEWLY_CENSORED
   CLASSIFICATION:
     UNDEFINED|NEWS|ACTIVISM|LAW|HUMANE_RIGHTS|RELIGION|SEXUALITY|PORNOGRAPHY|
@@ -30,6 +30,8 @@ POSSIBLE CENSORSHIP TECHINQUES:
   - url paths[links]
     - economically expensive.
 TODO
+  - thread.run();thread.start()
+  - data/name_code.txt is unique file,
   - does all servers support 3xx, and complete missing url labels?
   - push ./data automatically 
   - imp test

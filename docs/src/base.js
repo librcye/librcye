@@ -4,29 +4,20 @@ var UNCENSORED = DATA+"uncensored"
 var NEWLY = DATA+"newly_censored"
 var RAW_HOST = "https://raw.githubusercontent.com/librcye/data/master/"
 var countries_records = [] // as read from raw countries file
-var countires = [] //unique countires. in form NAME_CODE
+var countries = [] //unique countries. in form NAME_CODE
 var SEP = ","
 
 function getCensoredCountries() {
     var request = new XMLHttpRequest()
     request.onreadystatechange = function() {
-	if (this.status==200) {
-	    countries_recordes = this.responseText.split('\n')
-	}
+	if (this.status==200)
+	    countries_records = this.responseText.split('\n')
     }
     request.open('GET', RAW_HOST+"countries")
     request.send()
-    for (var i = 0; i < countries_records.length; i++) {
-	country = countries_records[i].split('_', 1).toLowerCase()
-	for (var j = 0; j < countries.length; j++)
-	    if (countries[j]==country) {
-		country = null
-		break
-	    }
-	if (country) 
-	    countries.push(country)
-    }
-    return countires
+    for (var i = 0; i < countries_records.length; i++)
+	countries.push(countries_records[i].split('_', 1).toLowerCase())
+    return countries
 }
 
 function load_records() {
