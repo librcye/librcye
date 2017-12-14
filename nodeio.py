@@ -150,7 +150,7 @@ class NodeIO:
         for i,node in enumerate(self.nodes):
             if i%MIL==0 and i >0:
                 time2 = time.time()
-                diff = tinme2-time1
+                diff = time2-time1
                 timespan += diff
                 time1 = time2
                 mils += 1
