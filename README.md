@@ -19,6 +19,14 @@ FORMAT
     CENSORED|UNCENSORED|NEWLY_CENSORED
   CLASSIFICATION:
     UNDEFINED|NEWS|ACTIVISM|LAW|HUMANE_RIGHTS|RELIGION|SEXUALITY|PORNOGRAPHY|
+  HEADERS: HEADERS[,HEADERS]
+    |name:value
+  REQUEST_LOG:
+    ip||port||host||path||HEADERS(request)
+  RESPONSE_LOG:
+    status||reason||HEADERS(response)
+  CONNECTION_LOG:
+    REQUEST_LOG\nCONNECTION_LOG\n
 --------------------------------------------------------
 FACTS
   - some servers (top ranked) resonse to not supported by status code 3xx  instad of 4xx
